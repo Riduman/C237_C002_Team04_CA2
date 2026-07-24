@@ -1,0 +1,21 @@
+{
+  "name": "vybe-tia-part",
+  "version": "1.0.0",
+  "description": "Tia's assigned EJS section for the Vybe Event Management System",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "ejs": "^3.1.10",
+    "express": "^4.22.2",
+    "express-session": "^1.19.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.23.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

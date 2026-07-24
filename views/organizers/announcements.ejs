@@ -1,0 +1,52 @@
+<%- include("../partials/head") %>
+<%- include("../partials/navbar") %>
+<%- include("../partials/message") %>
+
+<div class="container mt-5">
+
+<h2>Announcements</h2>
+<h4><%= event.title %></h4>
+
+<form action="/organizer/events/<%= event.eventId %>/announcements" method="POST" class="mb-4">
+    <div class="mb-3">
+        <label>New announcement</label>
+        <textarea name="message" class="form-control" rows="3"
+                  placeholder="e.g. Venue has changed to Lab B" required></textarea>
+    </div>
+    <button class="btn btn-primary">Post Announcement</button>
+</form>
+
+<table class="table table-bordered">
+
+<tr>
+<th>Message</th>
+<th>Posted</th>
+<th></th>
+</tr>
+
+<% if (announcements.length === 0) { %>
+<tr>
+<td colspan="3">No announcements yet.</td>
+</tr>
+<% } %>
+
+<% announcements.forEach(a => { %>
+<tr>
+<td><%= a.message %></td>
+<td><%= new Date(a.createdAt).toLocaleString() %></td>
+<td>
+    <form action="/organizer/announcements/<%= a.announcementId %>/delete" method="POST"
+          onsubmit="return confirm('Delete this announcement?');">
+        <button class="btn btn-danger btn-sm">Delete</button>
+    </form>
+</td>
+</tr>
+<% }) %>
+
+</table>
+
+<a href="/organizer/dashboard" class="btn btn-secondary">Back</a>
+
+</div>
+
+<%- include("../partials/footer") %>

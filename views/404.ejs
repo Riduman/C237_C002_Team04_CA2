@@ -1,0 +1,15 @@
+<%- include("partials/head") %>
+
+<main class="error-page">
+  <img src="/images/vybe-logo.png" alt="Vybe" class="error-logo">
+  <div class="error-number">404</div>
+  <h1>This page missed the Vybe.</h1>
+  <p class="text-body-secondary">
+    The page you are looking for does not exist.
+  </p>
+  <a href="<%= user ? '/' : '/welcome' %>" class="btn btn-vybe btn-lg">
+    Return home
+  </a>
+</main>
+
+<%- include("partials/footer") %>

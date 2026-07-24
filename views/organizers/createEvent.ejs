@@ -1,0 +1,89 @@
+<%- include("../partials/head") %>
+<%- include("../partials/navbar") %>
+
+<div class="container mt-5">
+
+<h2>Create Event</h2>
+
+<form action="/organizer/createEvent" method="POST" enctype="multipart/form-data">
+
+    <div class="mb-3">
+        <label>Title</label>
+        <input type="text" name="title" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label>Description</label>
+        <textarea name="description" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label>Venue</label>
+        <input type="text" name="venue" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label>School</label>
+
+        <select name="school" class="form-control">
+
+            <% schools.forEach(school=>{ %>
+
+                <option value="<%= school.code %>">
+
+                    <%= school.code %>
+
+                </option>
+
+            <% }) %>
+
+        </select>
+
+    </div>
+
+    <div class="mb-3">
+        <label>Category</label>
+
+        <select name="category" class="form-control">
+
+            <option>Workshop</option>
+            <option>Sports</option>
+            <option>Charity</option>
+            <option>Seminar</option>
+            <option>Club Activity</option>
+            <option>Celebration</option>
+
+        </select>
+
+    </div>
+
+    <div class="mb-3">
+        <label>Date</label>
+        <input type="date" name="eventDate" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label>Time</label>
+        <input type="time" name="eventTime" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label>Capacity</label>
+        <input type="number" name="capacity" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label>Event poster (optional)</label>
+        <input type="file" name="posterImage" class="form-control" accept=".jpg,.jpeg,.png,.webp">
+        <small class="text-muted">JPG, PNG or WEBP, max 3MB.</small>
+    </div>
+
+    <button class="btn btn-primary">
+        Create Event
+    </button>
+
+</form>
+
+</div>
+
+<%- include("../partials/footer") %>

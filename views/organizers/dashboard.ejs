@@ -1,0 +1,90 @@
+<%- include("../partials/head") %>
+<%- include("../partials/navbar") %>
+
+<div class="container mt-5">
+
+<h2>Organizer Dashboard</h2>
+
+<a href="/organizer/createEvent" class="btn btn-primary mb-3">
+Create Event
+</a>
+
+<a href="/organizer/blocked" class="btn btn-outline-danger mb-3">
+Blocked Participants
+</a>
+
+<a href="/organizer/analytics" class="btn btn-outline-primary mb-3">
+Analytics
+</a>
+
+<table class="table table-bordered">
+
+<tr>
+<th>Title</th>
+<th>Date</th>
+<th>Actions</th>
+</tr>
+
+<% events.forEach(event=>{ %>
+
+<tr>
+
+<td><%= event.title %></td>
+
+<td><%= event.displayDate %> &middot; <%= event.time %></td>
+
+<td>
+
+<a href="/organizer/edit/<%= event.eventId %>"
+class="btn btn-warning btn-sm">
+
+Edit
+
+</a>
+
+<a href="/organizer/delete/<%= event.eventId %>"
+class="btn btn-danger btn-sm">
+
+Delete
+
+</a>
+
+<a href="/organizer/participants/<%= event.eventId %>"
+class="btn btn-info btn-sm">
+
+Participants
+
+</a>
+
+<a href="/organizer/events/<%= event.eventId %>/waitlist"
+class="btn btn-outline-info btn-sm">
+
+Waitlist
+
+</a>
+
+<a href="/organizer/events/<%= event.eventId %>/reviews"
+class="btn btn-secondary btn-sm">
+
+Reviews
+
+</a>
+
+<a href="/organizer/events/<%= event.eventId %>/announcements"
+class="btn btn-dark btn-sm">
+
+Announcements
+
+</a>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+</table>
+
+</div>
+
+<%- include("../partials/footer") %>

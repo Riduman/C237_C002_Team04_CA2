@@ -1,0 +1,58 @@
+<%- include("../partials/head") %>
+<%- include("../partials/navbar") %>
+<%- include("../partials/message") %>
+
+<div class="container mt-5">
+
+<h2>Ratings &amp; Reviews</h2>
+<h4><%= event.title %></h4>
+
+<% if (averageRating) { %>
+  <p><strong>Average rating:</strong> <%= averageRating %> / 5 (<%= reviews.length %> reviews)</p>
+<% } else { %>
+  <p class="text-muted">No reviews yet for this event.</p>
+<% } %>
+
+<table class="table table-bordered">
+
+<tr>
+<th>Participant</th>
+<th>Email</th>
+<th>Rating</th>
+<th>Comment</th>
+<th>Date</th>
+<th>Action</th>
+</tr>
+
+<% if (reviews.length === 0) { %>
+<tr>
+<td colspan="6">No reviews yet.</td>
+</tr>
+<% } %>
+
+<% reviews.forEach(review => { %>
+<tr>
+<td><%= review.fullName %></td>
+<td><%= review.email %></td>
+<td><%= review.rating %> / 5</td>
+<td><%= review.comment %></td>
+<td><%= new Date(review.createdAt).toLocaleDateString() %></td>
+<td>
+    <form action="/organizer/participants/<%= review.userId %>/block" method="POST"
+          onsubmit="return confirm('Block this participant from your future events?');">
+        <input type="hidden" name="reason" value="Inappropriate review on: <%= event.title %>">
+        <input type="hidden" name="returnTo" value="/organizer/events/<%= event.eventId %>/reviews">
+        <button class="btn btn-danger btn-sm">Block</button>
+    </form>
+</td>
+</tr>
+<% }) %>
+
+</table>
+
+<a href="/organizer/dashboard" class="btn btn-secondary">Back</a>
+<a href="/organizer/blocked" class="btn btn-outline-danger">View Blocked Participants</a>
+
+</div>
+
+<%- include("../partials/footer") %>

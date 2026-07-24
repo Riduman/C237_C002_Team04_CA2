@@ -1,0 +1,134 @@
+<%- include("../partials/head") %>
+<%- include("../partials/navbar") %>
+
+<div class="container mt-5">
+
+<h2>Edit Event</h2>
+
+<form action="/organizer/edit/<%= event.eventId %>" method="POST" enctype="multipart/form-data">
+
+    <div class="mb-3">
+        <label>Title</label>
+        <input
+            type="text"
+            name="title"
+            class="form-control"
+            value="<%= event.title %>"
+            required>
+    </div>
+
+    <div class="mb-3">
+        <label>Description</label>
+        <textarea
+            name="description"
+            class="form-control"><%= event.description %></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label>Venue</label>
+        <input
+            type="text"
+            name="venue"
+            class="form-control"
+            value="<%= event.venue %>">
+    </div>
+
+    <div class="mb-3">
+        <label>School</label>
+
+        <select name="school" class="form-control">
+
+            <% schools.forEach(school => { %>
+
+                <option
+                    value="<%= school.code %>"
+                    <%= event.school === school.code ? "selected" : "" %>>
+
+                    <%= school.code %>
+
+                </option>
+
+            <% }) %>
+
+        </select>
+
+    </div>
+
+    <div class="mb-3">
+        <label>Category</label>
+
+        <select name="category" class="form-control">
+
+            <option value="Workshop" <%= event.category=="Workshop" ? "selected" : "" %>>Workshop</option>
+
+            <option value="Sports" <%= event.category=="Sports" ? "selected" : "" %>>Sports</option>
+
+            <option value="Charity" <%= event.category=="Charity" ? "selected" : "" %>>Charity</option>
+
+            <option value="Seminar" <%= event.category=="Seminar" ? "selected" : "" %>>Seminar</option>
+
+            <option value="Club Activity" <%= event.category=="Club Activity" ? "selected" : "" %>>Club Activity</option>
+
+            <option value="Celebration" <%= event.category=="Celebration" ? "selected" : "" %>>Celebration</option>
+
+        </select>
+
+    </div>
+
+    <div class="mb-3">
+        <label>Date</label>
+
+        <input
+            type="date"
+            name="eventDate"
+            class="form-control"
+            value="<%= event.eventDate.toISOString().split('T')[0] %>">
+
+    </div>
+
+    <div class="mb-3">
+        <label>Time</label>
+
+        <input
+            type="time"
+            name="eventTime"
+            class="form-control"
+            value="<%= event.eventTime %>">
+
+    </div>
+
+    <div class="mb-3">
+        <label>Capacity</label>
+
+        <input
+            type="number"
+            name="capacity"
+            class="form-control"
+            value="<%= event.capacity %>">
+
+    </div>
+
+    <div class="mb-3">
+        <label>Event poster (optional)</label>
+
+        <% if (event.posterImage) { %>
+            <div class="mb-2">
+                <img src="<%= event.posterImage %>" alt="Current poster" style="max-width:200px;">
+            </div>
+        <% } %>
+
+        <input type="file" name="posterImage" class="form-control" accept=".jpg,.jpeg,.png,.webp">
+        <small class="text-muted">Leave empty to keep the current poster.</small>
+    </div>
+
+    <button class="btn btn-success">
+
+        Update Event
+
+    </button>
+
+</form>
+
+</div>
+
+<%- include("../partials/footer") %>

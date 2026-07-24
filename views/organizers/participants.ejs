@@ -1,0 +1,72 @@
+<%- include("../partials/head") %>
+<%- include("../partials/navbar") %>
+
+<div class="container mt-5">
+
+<h2>Participants</h2>
+
+<h4><%= event.title %></h4>
+
+<table class="table table-bordered">
+
+<tr>
+
+<th>Name</th>
+
+<th>Email</th>
+
+<th>School</th>
+
+</tr>
+
+<% if(participants.length===0){ %>
+
+<tr>
+
+<td colspan="3">
+
+No participants yet.
+
+</td>
+
+</tr>
+
+<% } %>
+
+<% participants.forEach(person=>{ %>
+
+<tr>
+
+<td>
+
+<%= person.fullName %>
+
+</td>
+
+<td>
+
+<%= person.email %>
+
+</td>
+
+<td>
+
+<%= person.school %>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+</table>
+
+<a href="/organizer/dashboard" class="btn btn-secondary">
+
+Back
+
+</a>
+
+</div>
+
+<%- include("../partials/footer") %>

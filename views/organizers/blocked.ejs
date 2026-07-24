@@ -1,0 +1,46 @@
+<%- include("../partials/head") %>
+<%- include("../partials/navbar") %>
+<%- include("../partials/message") %>
+
+<div class="container mt-5">
+
+<h2>Blocked Participants</h2>
+<p class="text-muted">These participants can't register for any of your events until you unblock them.</p>
+
+<table class="table table-bordered">
+
+<tr>
+<th>Participant</th>
+<th>Email</th>
+<th>Reason</th>
+<th>Blocked On</th>
+<th></th>
+</tr>
+
+<% if (blockedParticipants.length === 0) { %>
+<tr>
+<td colspan="5">You haven't blocked anyone.</td>
+</tr>
+<% } %>
+
+<% blockedParticipants.forEach(person => { %>
+<tr>
+<td><%= person.fullName %></td>
+<td><%= person.email %></td>
+<td><%= person.reason || "—" %></td>
+<td><%= new Date(person.createdAt).toLocaleDateString() %></td>
+<td>
+    <form action="/organizer/participants/<%= person.userId %>/unblock" method="POST">
+        <button class="btn btn-success btn-sm">Unblock</button>
+    </form>
+</td>
+</tr>
+<% }) %>
+
+</table>
+
+<a href="/organizer/dashboard" class="btn btn-secondary">Back</a>
+
+</div>
+
+<%- include("../partials/footer") %>

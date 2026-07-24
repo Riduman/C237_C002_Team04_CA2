@@ -1,0 +1,141 @@
+<%- include("../partials/head") %>
+<%- include("../partials/navbar") %>
+<%- include("../partials/message") %>
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow"><%= event.category %> · <%= event.school %></span>
+    <h1><%= event.title %></h1>
+  </div>
+</header>
+
+<main class="container pb-5">
+  <div class="row g-4">
+
+    <!-- Event info -->
+    <div class="col-lg-8">
+      <article class="event-card mb-4">
+        <div class="event-card-banner school-<%= event.school.toLowerCase() %>" style="height:220px;">
+          <span class="event-school"><%= event.school %></span>
+          <% if (event.posterImage) { %>
+            <img src="<%= event.posterImage %>" alt="<%= event.title %>"
+                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          <% } else { %>
+            <i class="bi <%= event.icon %>"></i>
+          <% } %>
+        </div>
+
+        <div class="event-card-body">
+          <p><%= event.description %></p>
+
+          <div class="event-meta flex-wrap gap-3">
+            <span><i class="bi bi-calendar3"></i> <%= event.displayDate %> · <%= event.time %></span>
+            <span><i class="bi bi-geo-alt"></i> <%= event.venue %></span>
+            <span><i class="bi bi-people"></i> <%= event.vacancies %> spots left</span>
+          </div>
+
+          <!-- JOIN / CANCEL / SAVE - Uzair Shah's part -->
+          <% if (user.role === "participant") { %>
+            <div class="d-flex flex-wrap gap-2 mt-3">
+              <% if (event.vacancies > 0) { %>
+                <form action="/events/<%= event.id %>/join" method="POST">
+                  <button type="submit" class="btn btn-vybe">
+                    <i class="bi bi-person-plus-fill me-1"></i> Join Event
+                  </button>
+                </form>
+              <% } else { %>
+                <form action="/events/<%= event.id %>/join" method="POST">
+                  <button type="submit" class="btn btn-outline-secondary">
+                    <i class="bi bi-hourglass-split me-1"></i> Join Waitlist
+                  </button>
+                </form>
+              <% } %>
+
+              <form action="/events/<%= event.id %>/cancel" method="POST">
+                <button type="submit" class="btn btn-outline-danger">Cancel Registration</button>
+              </form>
+
+              <form action="/events/<%= event.id %>/bookmark" method="POST">
+                <button type="submit" class="btn btn-outline-warning">
+                  <i class="bi bi-bookmark-star me-1"></i> Save
+                </button>
+              </form>
+            </div>
+          <% } %>
+        </div>
+      </article>
+
+      <!-- Announcements - Xiu Hui's part -->
+      <% if (announcements.length > 0) { %>
+        <section class="settings-form-card mb-4">
+          <span class="eyebrow">Updates</span>
+          <h2>Announcements</h2>
+          <% announcements.forEach((a) => { %>
+            <div class="alert alert-light border rounded-4">
+              <div><%= a.message %></div>
+              <small class="text-body-secondary"><%= new Date(a.createdAt).toLocaleString() %></small>
+            </div>
+          <% }) %>
+        </section>
+      <% } %>
+
+      <!-- Reviews - Riduman's part -->
+      <section class="settings-form-card">
+        <span class="eyebrow">Feedback</span>
+        <h2>Ratings &amp; Reviews (<%= reviews.length %>)</h2>
+
+        <% if (reviews.length === 0) { %>
+          <p class="text-body-secondary">No reviews yet.</p>
+        <% } %>
+
+        <% reviews.forEach((review) => { %>
+          <div class="d-flex gap-3 border-bottom pb-3 mb-3">
+            <img src="<%= review.profilePicture %>" alt="<%= review.fullName %>"
+                 style="width:44px;height:44px;border-radius:50%;object-fit:cover;">
+            <div>
+              <strong><%= review.fullName %></strong>
+              <div class="text-warning">
+                <% for (let i = 1; i <= 5; i++) { %>
+                  <i class="bi <%= i <= review.rating ? 'bi-star-fill' : 'bi-star' %>"></i>
+                <% } %>
+              </div>
+              <p class="mb-1"><%= review.comment %></p>
+              <small class="text-body-secondary"><%= new Date(review.createdAt).toLocaleDateString() %></small>
+            </div>
+          </div>
+        <% }) %>
+      </section>
+    </div>
+
+    <!-- Leave a review -->
+    <div class="col-lg-4">
+      <aside class="settings-sidebar">
+        <% if (canReview) { %>
+          <h2 class="h6">Rate this event</h2>
+          <form action="/events/<%= event.id %>/review" method="POST">
+            <div class="mb-2">
+              <select class="form-select" name="rating" required>
+                <option value="">Choose a rating</option>
+                <option value="5">5 - Excellent</option>
+                <option value="4">4 - Good</option>
+                <option value="3">3 - Okay</option>
+                <option value="2">2 - Poor</option>
+                <option value="1">1 - Very Poor</option>
+              </select>
+            </div>
+            <textarea class="form-control mb-2" name="comment" rows="3" placeholder="Share your experience"></textarea>
+            <button class="btn btn-vybe w-100" type="submit">Submit Review</button>
+          </form>
+        <% } else if (alreadyReviewed) { %>
+          <p class="text-body-secondary mb-0">You've already reviewed this event. Thanks!</p>
+        <% } else { %>
+          <p class="text-body-secondary mb-0">
+            You can leave a rating once the organizer has checked you in at this event.
+          </p>
+        <% } %>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<%- include("../partials/footer") %>

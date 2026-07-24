@@ -1,0 +1,1 @@
+const c=document.querySelector(".welcome-content");window.addEventListener("scroll",()=>{if(!c)return;const p=Math.min(window.scrollY/330,1);c.style.opacity=1-p;c.style.transform=`translateY(${-80*p}px) scale(${1-.04*p})`;});

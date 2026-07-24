@@ -1,0 +1,93 @@
+<%- include("../partials/head") %>
+<%- include("../partials/navbar") %>
+<%- include("../partials/message") %>
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">Organizer tools</span>
+    <h1>Analytics</h1>
+    <p class="text-body-secondary">A quick look at how your events are doing.</p>
+  </div>
+</header>
+
+<main class="container pb-5">
+
+  <!-- The 3 headline numbers -->
+  <div class="row g-4 mb-4">
+    <div class="col-md-4">
+      <div class="settings-form-card text-center">
+        <span class="eyebrow">Events created</span>
+        <h2 class="display-6"><%= totalEvents %></h2>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="settings-form-card text-center">
+        <span class="eyebrow">Participants (confirmed)</span>
+        <h2 class="display-6"><%= totalConfirmed %></h2>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="settings-form-card text-center">
+        <span class="eyebrow">Attendance rate</span>
+        <h2 class="display-6"><%= attendanceRate %>%</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- Popular categories -->
+    <div class="col-lg-6">
+      <section class="settings-form-card">
+        <span class="eyebrow">By category</span>
+        <h2>Popular event categories</h2>
+
+        <% if (categoryStats.length === 0) { %>
+          <p class="text-body-secondary">No events yet.</p>
+        <% } %>
+
+        <% const maxSignUps = Math.max(1, ...categoryStats.map((c) => c.signUps)); %>
+        <% categoryStats.forEach((c) => { %>
+          <div class="mb-3">
+            <div class="d-flex justify-content-between">
+              <span><%= c.category || "Uncategorised" %></span>
+              <strong><%= c.signUps %></strong>
+            </div>
+            <div class="progress" style="height:8px;">
+              <div class="progress-bar" style="width:<%= (c.signUps / maxSignUps) * 100 %>%;
+                   background:linear-gradient(135deg, var(--vybe-purple), var(--vybe-pink));"></div>
+            </div>
+          </div>
+        <% }) %>
+      </section>
+    </div>
+
+    <!-- Monthly event count -->
+    <div class="col-lg-6">
+      <section class="settings-form-card">
+        <span class="eyebrow">Over time</span>
+        <h2>Monthly event count</h2>
+
+        <% if (monthlyStats.length === 0) { %>
+          <p class="text-body-secondary">No events yet.</p>
+        <% } %>
+
+        <% const maxMonthly = Math.max(1, ...monthlyStats.map((m) => m.eventCount)); %>
+        <% monthlyStats.forEach((m) => { %>
+          <div class="mb-3">
+            <div class="d-flex justify-content-between">
+              <span><%= m.month %></span>
+              <strong><%= m.eventCount %></strong>
+            </div>
+            <div class="progress" style="height:8px;">
+              <div class="progress-bar" style="width:<%= (m.eventCount / maxMonthly) * 100 %>%;
+                   background:linear-gradient(135deg, var(--vybe-purple), var(--vybe-pink));"></div>
+            </div>
+          </div>
+        <% }) %>
+      </section>
+    </div>
+  </div>
+</main>
+
+<%- include("../partials/footer") %>

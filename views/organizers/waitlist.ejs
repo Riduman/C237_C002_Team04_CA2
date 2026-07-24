@@ -1,0 +1,77 @@
+<%- include("../partials/head") %>
+<%- include("../partials/navbar") %>
+<%- include("../partials/message") %>
+
+<div class="container mt-5">
+
+<h2>Waitlist &amp; Attendance</h2>
+<h4><%= event.title %></h4>
+<p class="text-muted">
+    <%= confirmed.length %> confirmed &middot; <%= waitlisted.length %> waiting
+</p>
+
+<h5 class="mt-4">Confirmed participants</h5>
+<table class="table table-bordered">
+
+<tr>
+<th>Participant</th>
+<th>Email</th>
+<th>Attended?</th>
+</tr>
+
+<% if (confirmed.length === 0) { %>
+<tr>
+<td colspan="3">No one has registered yet.</td>
+</tr>
+<% } %>
+
+<% confirmed.forEach(person => { %>
+<tr>
+<td><%= person.fullName %></td>
+<td><%= person.email %></td>
+<td>
+    <form action="/organizer/registrations/<%= person.registrationId %>/checkin" method="POST">
+        <button class="btn btn-sm <%= person.attended ? 'btn-success' : 'btn-outline-secondary' %>">
+            <%= person.attended ? "Attended" : "Mark as attended" %>
+        </button>
+    </form>
+</td>
+</tr>
+<% }) %>
+
+</table>
+
+<h5 class="mt-4">Waitlist</h5>
+<p class="text-muted">
+    If a confirmed spot opens up (someone cancels), the person at the top of this list is
+    automatically moved to "confirmed".
+</p>
+<table class="table table-bordered">
+
+<tr>
+<th>#</th>
+<th>Participant</th>
+<th>Email</th>
+</tr>
+
+<% if (waitlisted.length === 0) { %>
+<tr>
+<td colspan="3">No one is on the waitlist.</td>
+</tr>
+<% } %>
+
+<% waitlisted.forEach((person, index) => { %>
+<tr>
+<td><%= index + 1 %></td>
+<td><%= person.fullName %></td>
+<td><%= person.email %></td>
+</tr>
+<% }) %>
+
+</table>
+
+<a href="/organizer/dashboard" class="btn btn-secondary">Back</a>
+
+</div>
+
+<%- include("../partials/footer") %>

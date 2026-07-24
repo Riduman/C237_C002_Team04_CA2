@@ -1,0 +1,70 @@
+<%- include("../partials/head") %>
+  <main class="auth-shell">
+    <section class="auth-showcase">
+      <div class="showcase-orb orb-a"></div>
+      <div class="showcase-orb orb-b"></div>
+      <img src="/images/vybe-logo.png" class="auth-main-logo" alt="Vybe">
+      <span class="showcase-kicker">WHERE CAMPUS COMES ALIVE.</span>
+      <h1>Find the events<br>that make campus<br><span>feel alive.</span></h1>
+      <p>Discover workshops, sports, charity events, seminars, club activities and celebrations across Republic
+        Polytechnic.</p>
+      <div class="showcase-badges"><span>7 RP Schools</span><span>One Campus</span><span>Endless Experiences</span>
+      </div>
+    </section>
+    <section class="auth-side">
+      <div class="auth-box">
+        <div class="auth-tabs">
+          <a href="/login?role=<%= role %>">Login</a>
+          <a class="active" href="/signup?role=<%= role %>">Sign Up</a>
+        </div>
+        <span class="mini-kicker">
+          <%= role==="organizer" ? "VERIFIED ORGANIZER" : "JOIN THE VYBE" %>
+        </span>
+        <h2>Create your account</h2>
+        <p class="text-body-secondary">Sign up now, then log in with your new account.</p>
+        <% if (error) { %>
+          <div class="alert alert-danger rounded-4">
+            <%= error %>
+          </div>
+          <% } %>
+            <form method="POST" action="/signup">
+              <input type="hidden" name="role" value="<%= role %>">
+              <label class="form-label">Full name</label><input class="form-control form-control-lg mb-3"
+                name="fullName" value="<%= values.fullName || '' %>" placeholder="Enter your full name" required>
+              <label class="form-label">Email address</label>
+              <input class="form-control form-control-lg mb-3" name="email" type="email"
+                value="<%= values.email || '' %>" placeholder="name@myrp.edu.sg" required>
+              <label class="form-label">RP School</label><select class="form-select form-select-lg mb-3" name="school"
+                required>
+                <option value="">Choose your school</option>
+                <% schools.forEach(s=>{ %><option value="<%= s.code %>" <%=values.school===s.code?"selected":"" %>><%=
+                      s.code %> — <%= s.name %>
+                  </option>
+                  <% }) %>
+              </select>
+              <% if(role==="organizer" ){ %><label class="form-label">Organizer verification code</label><input
+                  class="form-control form-control-lg mb-3" name="organizerCode" type="password"
+                  placeholder="Code issued by your RP school" required>
+                <% } %>
+                  <label class="form-label">Password</label>
+                  <div class="password-wrap mb-4"><input id="password" class="form-control form-control-lg required"
+                      name="password" type="password" placeholder="Enter your password" required><button type="button"
+                      data-password-target="password">Show</button></div>
+                  <button class="btn btn-auth w-100 btn-lg">Create Account</button>
+            </form>
+            <p class="auth-switch">Already registered? <a href="/login?role=<%= role %>">Login here</a></p>
+            <div class="admin-entry">
+              <div><i class="bi <%= role==='organizer'?'bi-people':'bi-shield-check' %>"></i><span><strong>
+                    <%= role==='organizer' ?'Participant':'Admin / Organizer' %>?
+                  </strong><small>
+                    <%= role==='organizer' ?'Return to student login':'Use your school verification access' %>
+                  </small></span></div>
+              <a href="/login?role=<%= role==='organizer'?'participant':'organizer' %>"><i
+                  class="bi bi-arrow-right"></i></a>
+            </div>
+      </div>
+    </section>
+  </main>
+  <div class="theme-widget"><button id="themeToggle" aria-label="Change theme"><i class="bi bi-palette2"></i></button>
+  </div>
+  <%- include("../partials/footer") %>

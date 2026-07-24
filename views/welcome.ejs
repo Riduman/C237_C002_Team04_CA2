@@ -1,0 +1,94 @@
+<%- include("partials/head") %>
+
+<main class="welcome-page">
+  <div class="welcome-decoration decoration-one"></div>
+  <div class="welcome-decoration decoration-two"></div>
+
+  <section class="container position-relative">
+    <div class="text-center mb-5">
+      <img
+        src="/images/vybe-logo.png"
+        alt="Vybe"
+        class="welcome-logo mb-4"
+      >
+      <span class="eyebrow d-block mb-3">Republic Polytechnic Events</span>
+      <h1 class="display-5 fw-bold mb-3">
+        How will you use <span class="gradient-text">Vybe?</span>
+      </h1>
+      <p class="lead text-body-secondary mx-auto welcome-copy">
+        Choose an account type to continue. Organizers require a private
+        school verification code before they can register.
+      </p>
+    </div>
+
+    <div class="row justify-content-center g-4">
+      <div class="col-md-6 col-lg-5">
+        <article class="role-card participant-card h-100">
+          <div class="role-icon">
+            <i class="bi bi-people"></i>
+          </div>
+
+          <span class="role-label">For students</span>
+          <h2>Participant</h2>
+          <p>
+            Browse campus events, search by category or school and discover
+            activities that match your interests.
+          </p>
+
+          <ul class="role-benefits">
+            <li><i class="bi bi-check-circle-fill"></i> Explore available events</li>
+            <li><i class="bi bi-check-circle-fill"></i> Search, filter and sort</li>
+            <li><i class="bi bi-check-circle-fill"></i> Personalised account</li>
+          </ul>
+
+          <div class="d-grid gap-2 mt-auto">
+            <a href="/login?role=participant" class="btn btn-vybe btn-lg">
+              Participant login
+            </a>
+            <a
+              href="/signup?role=participant"
+              class="btn btn-outline-secondary btn-lg"
+            >
+              Create participant account
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <div class="col-md-6 col-lg-5">
+        <article class="role-card organizer-card h-100">
+          <div class="role-icon">
+            <i class="bi bi-shield-check"></i>
+          </div>
+
+          <span class="role-label">For verified staff and leaders</span>
+          <h2>School Organizer</h2>
+          <p>
+            Access the organizer side of Vybe using the verification code
+            issued to your RP school.
+          </p>
+
+          <ul class="role-benefits">
+            <li><i class="bi bi-check-circle-fill"></i> School-verified registration</li>
+            <li><i class="bi bi-check-circle-fill"></i> Separate organizer account</li>
+            <li><i class="bi bi-check-circle-fill"></i> Protected role access</li>
+          </ul>
+
+          <div class="d-grid gap-2 mt-auto">
+            <a href="/login?role=organizer" class="btn btn-dark btn-lg">
+              Organizer login
+            </a>
+            <a
+              href="/signup?role=organizer"
+              class="btn btn-outline-secondary btn-lg"
+            >
+              Create organizer account
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include("partials/footer") %>

@@ -1,0 +1,177 @@
+<%- include("../partials/head") %>
+<%- include("../partials/navbar") %>
+
+<header class="page-header compact-header">
+  <div class="container">
+    <span class="eyebrow">Personalisation</span>
+    <h1>Settings</h1>
+    <p class="text-body-secondary">
+      Update your profile and choose how Vybe looks.
+    </p>
+  </div>
+</header>
+
+<main class="container pb-5">
+  <div class="row g-4">
+    <div class="col-lg-4">
+      <aside class="settings-sidebar">
+        <img
+          src="<%= user.profilePicture %>"
+          alt="<%= user.fullName %>"
+          class="settings-avatar"
+        >
+        <h2><%= user.fullName %></h2>
+        <p class="text-body-secondary mb-2"><%= user.email %></p>
+        <span class="account-role-badge text-capitalize">
+          <%= user.role %> · <%= user.school %>
+        </span>
+
+        <hr>
+
+        <div class="theme-setting">
+          <div>
+            <strong>Appearance</strong>
+            <small>Switch between light and dark mode.</small>
+          </div>
+
+          <button
+            class="btn btn-outline-secondary"
+            id="settingsThemeToggle"
+            type="button"
+          >
+            <i class="bi bi-circle-half me-2"></i>
+            Change theme
+          </button>
+        </div>
+      </aside>
+    </div>
+
+    <div class="col-lg-8">
+      <section class="settings-form-card">
+        <div class="mb-4">
+          <span class="eyebrow">Profile information</span>
+          <h2>Edit your details</h2>
+        </div>
+
+        <% if (error) { %>
+          <div class="alert alert-danger rounded-4 border-0">
+            <%= error %>
+          </div>
+        <% } %>
+
+        <% if (success) { %>
+          <div class="alert alert-success rounded-4 border-0">
+            <%= success %>
+          </div>
+        <% } %>
+
+        <form
+          action="/settings/profile"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div class="profile-upload-box mb-4">
+            <img
+              src="<%= user.profilePicture %>"
+              alt="Current profile"
+              class="profile-upload-preview"
+              id="profilePreview"
+            >
+
+            <div>
+              <label for="profilePicture" class="form-label fw-semibold">
+                Profile picture
+              </label>
+              <input
+                id="profilePicture"
+                name="profilePicture"
+                type="file"
+                class="form-control"
+                accept=".jpg,.jpeg,.png,.webp"
+              >
+              <small class="text-body-secondary">
+                JPG, PNG or WEBP. Maximum 3 MB.
+              </small>
+            </div>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="fullName" class="form-label">Full name</label>
+              <input
+                id="fullName"
+                name="fullName"
+                class="form-control form-control-lg"
+                value="<%= user.fullName %>"
+                required
+              >
+            </div>
+
+            <div class="col-md-6">
+              <label for="email" class="form-label">Email address</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                class="form-control form-control-lg"
+                value="<%= user.email %>"
+                required
+              >
+            </div>
+
+            <div class="col-md-6">
+              <label for="school" class="form-label">RP school</label>
+              <select
+                id="school"
+                name="school"
+                class="form-select form-select-lg"
+                required
+              >
+                <% schools.forEach((school) => { %>
+                  <option
+                    value="<%= school.code %>"
+                    <%= user.school === school.code ? "selected" : "" %>
+                  >
+                    <%= school.code %> — <%= school.name %>
+                  </option>
+                <% }) %>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="phone" class="form-label">Contact number</label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                class="form-control form-control-lg"
+                placeholder="+65"
+                value="<%= user.phone || '' %>"
+              >
+            </div>
+
+            <div class="col-12">
+              <label for="bio" class="form-label">Bio</label>
+              <textarea
+                id="bio"
+                name="bio"
+                class="form-control"
+                rows="4"
+                maxlength="250"
+                placeholder="Tell people a little about yourself"
+              ><%= user.bio || '' %></textarea>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end mt-4">
+            <button class="btn btn-vybe btn-lg" type="submit">
+              Save changes
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</main>
+
+<%- include("../partials/footer") %>

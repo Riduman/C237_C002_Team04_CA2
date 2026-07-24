@@ -1,0 +1,59 @@
+<%- include("../partials/head") %>
+  <main class="auth-shell">
+    <section class="auth-showcase">
+      <div class="showcase-orb orb-a"></div>
+      <div class="showcase-orb orb-b"></div>
+      <img src="/images/vybe-logo.png" class="auth-main-logo" alt="Vybe">
+      <span class="showcase-kicker">WHERE CAMPUS COMES ALIVE.</span>
+      <h1>Find the events<br>that make campus<br><span>feel alive.</span></h1>
+      <p>Discover workshops, sports, charity events, seminars, club activities and celebrations across Republic
+        Polytechnic.</p>
+      <div class="showcase-badges"><span>7 RP Schools</span><span>One Campus</span><span>Endless Experiences</span>
+      </div>
+    </section>
+    <section class="auth-side">
+      <div class="auth-box">
+        <div class="auth-tabs">
+          <a class="active" href="/login?role=<%= role %>">Login</a>
+          <a href="/signup?role=<%= role %>">Sign Up</a>
+        </div>
+        <span class="mini-kicker">
+          <%= role==="organizer" ? "ORGANIZER ACCESS" : "WELCOME BACK" %>
+        </span>
+        <h2>
+          <%= role==="organizer" ? "Continue as an Organizer" : "Continue to Vybe" %>
+        </h2>
+        <p class="text-body-secondary">Enter the email and password used during sign up.</p>
+        <% if (error) { %>
+          <div class="alert alert-danger rounded-4">
+            <%= error %>
+          </div>
+          <% } %>
+            <form method="POST" action="/login">
+              <input type="hidden" name="role" value="<%= role %>">
+              <label class="form-label">Email address</label>
+              <input class="form-control form-control-lg mb-3" name="email" type="email"
+                value="<%= values.email || '' %>" placeholder="name@myrp.edu.sg" required>
+              <div class="d-flex justify-content-between"><label class="form-label">Password</label><span
+                  class="small text-vybe">Forgot password?</span></div>
+              <div class="password-wrap mb-4"><input id="password" class="form-control form-control-lg" name="password"
+                  type="password" placeholder="Enter your password" required><button type="button"
+                  data-password-target="password">Show</button></div>
+              <button class="btn btn-auth w-100 btn-lg">Login</button>
+            </form>
+            <p class="auth-switch">New here? <a href="/signup?role=<%= role %>">Create an account</a></p>
+            <div class="admin-entry">
+              <div><i class="bi <%= role==='organizer'?'bi-people':'bi-shield-check' %>"></i><span><strong>
+                    <%= role==='organizer' ?'Participant':'Admin / Organizer' %>?
+                  </strong><small>
+                    <%= role==='organizer' ?'Return to student login':'Use your school verification access' %>
+                  </small></span></div>
+              <a href="/login?role=<%= role==='organizer'?'participant':'organizer' %>"><i
+                  class="bi bi-arrow-right"></i></a>
+            </div>
+      </div>
+    </section>
+  </main>
+  <div class="theme-widget"><button id="themeToggle" aria-label="Change theme"><i class="bi bi-palette2"></i></button>
+  </div>
+  <%- include("../partials/footer") %>
